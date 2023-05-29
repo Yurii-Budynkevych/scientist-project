@@ -1,17 +1,35 @@
 :root {
-    --primary-text-color: #757575;
-    --title-text-color: #212121;
-    --accent-color: #2196F3;
-    --white-color: #FFFFFF;
-    --black-color: #000000;
+    --primary-text-color: ##212121;
+    --secondary-color: #FFFFFF;
+    --title-text-color: #000000;
     --primary-bcg: #FFFFFF;
-    --secondary-bcg: #F5F4FA;
-    --accent-bcg: #2F303A;
+    --secondary-bcg: #2F303A;
 }
 
 body {
     color: var(--primary-text-color);
     background-color: var(--primary-bcg);
-    font-family: Roboto, sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-style: normal;
+}
+
+.container {
+    width: 1280px;
+    padding: 0 15px;
+    margin: 0 auto;
+}
+.page-title {
+    text-align: center;
+    font-weight: 700;
+    font-size: x-large;
+    color: var(--title-text-color);
+}
+.page-nav-list {
+    list-style: none;
+}
+.page-text {
+    text-align: center;
+    font-weight: 300;
+    font-size: smaller;
+    font-style: italic;
 }
