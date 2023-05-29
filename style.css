@@ -1,9 +1,7 @@
 :root {
     --primary-text-color: ##212121;
-    --secondary-color: #FFFFFF;
     --title-text-color: #000000;
     --primary-bcg: #FFFFFF;
-    --secondary-bcg: #2F303A;
     --accent-color: #2196F3;
 }
 
@@ -27,7 +25,7 @@ body {
 
     text-align: center;
     font-weight: 700;
-    font-size: x-large;
+    font-size: 24px;
     color: var(--title-text-color);
 }
 .page-nav-list {
@@ -40,14 +38,14 @@ body {
 .page-nav-link {
     text-decoration: none;
     font-weight: 400;
-    font-size: smaller;
+    font-size: 14px;
     color: var(--accent-color);
 
     transition: font-size 500ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 .page-nav-link:hover,
 .page-nav-link:focus {
-    font-size: medium;
+    font-size: 16px;
     color: var(--title-text-color);
 }
 .page-text {
@@ -55,6 +53,31 @@ body {
 
     text-align: center;
     font-weight: 300;
-    font-size: smaller;
+    font-size: 13px;
     font-style: italic;
+}
+.section-title {
+    margin: 0 0 50px 0;
+        
+    text-align: center;
+    font-weight: 500;
+    font-size: 16px;
+}
+.section-text {
+    margin: 0 0 100px 0;
+    
+    font-weight: 400;
+    font-size: 14px;
+}
+.references-list {
+    margin: 0 0 100px 0;
+}
+.page-footer {
+    padding-bottom: 50px;
+}
+.page-footer-text {
+    margin: 0;
+    
+    font-weight: 400;
+    font-size: 14px;
 }
