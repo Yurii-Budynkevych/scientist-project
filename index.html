@@ -1,12 +1,414 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Hello World</h1>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="Acticle name" content="Acticle description" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Article name</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/modern-normalize@1.1.0/modern-normalize.min.css"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <header class="page-header">
+        <h1 class="page-title">
+          Disentangling Stellar Age Estimates from Galactic Chemodynamical Evolution
+        </h1>
+        <nav class="page-nav">
+          <ul class="page-nav-list">
+            <li class="page-nav-item"><a href="#section-1" class="page-nav-link">anchor 1</a></li>
+            <li class="page-nav-item"><a href="#section-2" class="page-nav-link">anchor 2</a></li>
+            <li class="page-nav-item"><a href="#section-3" class="page-nav-link">anchor 3</a></li>
+            <li class="page-nav-item"><a href="#section-4" class="page-nav-link">anchor 4</a></li>
+            <li class="page-nav-item"><a href="#section-5" class="page-nav-link">anchor 5</a></li>
+            <li class="page-nav-item"><a href="#section-6" class="page-nav-link">anchor 6</a></li>
+          </ul>
+        </nav>
+        <p class="page-text">
+          <sup>1</sup>David A. Dunlap Department of Astronomy & Astrophysics, University of Toronto,
+          50 St. George Street, Toronto, ON M5S 3H4, Canada <sup>2</sup>Department of Statistical
+          Sciences, University of Toronto, 9th Floor, Ontario Power Building, 700 University Ave,
+          Toronto, ON M5G 1Z5, Canada <sup>3</sup>Department of Astrophysical Sciences, Princeton
+          University, <sup>4</sup>Ivy Lane, Princeton, NJ 08544, USA <sup>4</sup>Dunlap Institute
+          for Astronomy & Astrophysics, University of Toronto, 50 St. George Street, Toronto, ON M5S
+          3H4, Canada <sup>5</sup>Data Sciences Institute, University of Toronto, 17th Floor,
+          Ontario Power Building, 700 University Ave, Toronto, ON M5G 1Z5, Canada
+          <sup>6</sup>Canadian Institute for Theoretical Astrophysics, University of Toronto, 60 St.
+          George Street, Toronto, ON M5S 3H8, Canada <sup>7</sup>Research School of Astronomy &
+          Astrophysics, Australian National University, Canberra, ACT 2611, Australia
+          <sup>8</sup>School of Computing, Australian National University, Canberra, ACT 2601,
+          Australia
+        </p>
+      </header>
+      <main class="page-main">
+        <section id="section-1" class="section-1">
+          <h2 class="section-title">ABSTRACT</h2>
+          <p class="section-text">
+            Stellar ages are key for determining the formation history of the Milky Way, but are
+            difficult to measure precisely. Furthermore, methods that use chemical abundances to
+            infer ages may entangle the intrinsic evolution of stars with the chemodynamical
+            evolution of the Galaxy. In this paper, we present a framework for making probabilistic
+            predictions of stellar ages, and then quantify the contribution of both stellar
+            evolution and Galactic chemical evolution to those predictions using SHAP values. We
+            apply this interpretable prediction framework to both a simulated Milky Way sample
+            containing stars in a variety of evolutionary stages and an APOGEE-mocked sample of red
+            clump stars. We find that in the former case, stellar evolution is the dominant driver
+            for age estimates, while in the latter case, the more restricted evolutionary
+            information causes the model to proxy ages through the chemical evolution model. We show
+            that as a result of the use of non-intrinsic Galactic chemical information, trends
+            estimated with the predicted ages, such as the age-metallicity relation, can deviate
+            from the truth.
+          </p>
+        </section>
+        <section id="section-2" class="section-2">
+          <h2 class="section-title">INTRODUCTION</h2>
+          <p class="section-text">
+            Measuring the chronochemodynamics of stars allows us to reconstruct a timeline of events
+            in the Galaxy. Of particular importance are stellar ages; good measurements of stellar
+            ages are necessary to understand stellar evolution and the formation history of the
+            Milky Way, and to identify new stellar populations within the Galaxy (Mackereth et al.
+            2019; Lu et al. 2021b,a; Ness et al. 2019; Aguirre et al. 2018). However, stellar ages
+            are particularly difficult to measure, as they are not directly related to any
+            observable (see Soderblom 2010 for a review). Instead, we can only measure properties
+            that are correlated with ages. For example, ages can be Corresponding author: Jeff Shen
+            shenjeff@princeton.edu obtained using gyrochronology (e.g., Barnes 2003; Angus et al.
+            2019) uses the empirical relation between a star’s rotation period and its age, and
+            asteroseismology (e.g., Lebreton & Montalban 2008; Aguirre et al. 2018), which uses
+            measurements of oscillation frequencies to probe the properties of the interiors of
+            stars, which are related to age. With the advent of surveys like APOGEE (Majewski et al.
+            2017), measurements of many stellar surface properties are available, and they can be
+            used to infer ages. Surface properties like log g and Teff describe stellar type, so
+            they can be used in conjunction with theoretical stellar evolution models to get
+            information about the age of a star (Bressan et al. 2012; Degl’Innocenti 2016; Choi et
+            al. 2016). Stellar evolution also changes surface abundances through physical processes
+            like dredge-up, whereby CNO products (nitrogen-rich and carbon-poor) are mixed into the
+            atmosphere of a star through convecarXiv:2305.15634v1 [astro-ph.GA] 25 May 2023 2 Shen
+            et al. tion. The CNO process is also mass dependent, and as a result, abundance ratios
+            like [C/N] can give insight into stellar evolution and be used to estimate ages (Salaris
+            et al. 2015). Thus, information about stellar evolution (i.e., age) is also correlated
+            with [Fe/H], [α/Fe], and other chemical abundances (Nissen et al. 2017; Casali et al.
+            2019). However, measured stellar abundances also depend on the material that a star was
+            formed from; chemical properties of the interstellar medium vary across time and
+            location within the Galaxy (Spina et al. 2016; Mena et al. 2019; Ness et al. 2019). For
+            example, Nissen et al. (2017) find for Kepler LEGACY stars in the Galactic disk that
+            [Mg/Fe] is correlated with age because the deposition of iron into the ISM from SNIa is
+            delayed relative to the production of Mg from SNII. Thus, ages that are inferred from
+            certain chemical abundances are entangled with Galactic chemical evolution. For
+            understanding the properties of stars and obtaining age estimates that are as precise as
+            possible, it may make sense to use as much information as is available. However, to
+            understand the assembly history of the Galaxy, it is ideal to have ages that are derived
+            from information intrinsic to a star—Galactic information should be removed. The primary
+            contribution of this paper is to introduce a framework for making probabilistic
+            predictions of the ages of stars. Here we use the Galactic information in the form of
+            [Mg/Fe] and [Fe/H] as well as stellar information in the form of [Fe/H], log g and Teff.
+            We then quantify how much age information comes from Galactic vs stellar models. We
+            introduce the methods used to do so—probabilistic random forests and SHapley Additive
+            exPlanations—and demonstrate the framework’s potential by applying it to a simple but
+            realistic simulation of Milky Way stars. We show that the model predictions are driven
+            primarily by stellar evolution information, and as a result, we are able to make robust
+            and interpretable predictions that reproduce expected trends in the data. In Section 6
+            we repeat our analysis using a sample of APOGEE-mocked red clump stars. This is a harder
+            test case because the stars in the sample have very similar log g values, as red clump
+            stars lie in a small cluster on the Hertzsprung-Russell diagram. Since log g is be
+            almost the same for all stars in that sample, we expect much less information to be
+            present in the stellar models than for the Milky Way sample. Thus, the models may need
+            to obtain age information by proxying through chemical correlations, which are not
+            intrinsic to the star itself. We show that this is indeed the case, and discuss some
+            implications of this result. We also make an attempt to explicitly decorrelate the
+            chemical information from the age information, and show how that process affects our
+            results. We note, however, that observers typically use [C/N] ratios rather than log g
+            and Teff to determine ages (e.g., Salaris et al. 2015; Martig et al. 2016; Ho et al.
+            2017; Casali et al. 2019). In a follow-up paper, we will extend our framework to
+            directly use stellar spectra rather than stellar parameters and abundances estimated
+            from the spectra. The layout of this paper is as follows. In Section 2 we describe our
+            data and the underlying Galactic and stellar models. In Section 3 we explain the
+            probabilistic random forest regression model which we use to make probabilistic age
+            predictions. In Section 4 we explain SHAP values, which allow us to quantify the
+            relative importance of certain features in our predictive models, and then use them to
+            determine the relative importance of features in our predictive model. In Section 5 we
+            discuss how well the models are able to reproduce simulated age-abundance trend in the
+            Galaxy, as a function of (1) choice of age estimator, (2) metallicity, and (3) whether
+            there are chemical correlations. In Section 6 we apply our framework to a harder test
+            case of red clump stars where the model proxies age information using chemical
+            correlations, and compare the results to those obtained from the Milky Way sample. A
+            summary of our findings is presented in Section 7.
+          </p>
+        </section>
+        <section id="section-3" class="section-3">
+          <h2 class="section-title">MILKY WAY DATA</h2>
+          <p class="section-text">
+            Measuring the chronochemodynamics of stars allows us to reconstruct a timeline of events
+            in the Galaxy. Of particular importance are stellar ages; good measurements of stellar
+            ages are necessary to understand stellar evolution and the formation history of the
+            Milky Way, and to identify new stellar populations within the Galaxy (Mackereth et al.
+            2019; Lu et al. 2021b,a; Ness et al. 2019; Aguirre et al. 2018). However, stellar ages
+            are particularly difficult to measure, as they are not directly related to any
+            observable (see Soderblom 2010 for a review). Instead, we can only measure properties
+            that are correlated with ages. For example, ages can be Corresponding author: Jeff Shen
+            shenjeff@princeton.edu obtained using gyrochronology (e.g., Barnes 2003; Angus et al.
+            2019) uses the empirical relation between a star’s rotation period and its age, and
+            asteroseismology (e.g., Lebreton & Montalban 2008; Aguirre et al. 2018), which uses
+            measurements of oscillation frequencies to probe the properties of the interiors of
+            stars, which are related to age. With the advent of surveys like APOGEE (Majewski et al.
+            2017), measurements of many stellar surface properties are available, and they can be
+            used to infer ages. Surface properties like log g and Teff describe stellar type, so
+            they can be used in conjunction with theoretical stellar evolution models to get
+            information about the age of a star (Bressan et al. 2012; Degl’Innocenti 2016; Choi et
+            al. 2016). Stellar evolution also changes surface abundances through physical processes
+            like dredge-up, whereby CNO products (nitrogen-rich and carbon-poor) are mixed into the
+            atmosphere of a star through convecarXiv:2305.15634v1 [astro-ph.GA] 25 May 2023 2 Shen
+            et al. tion. The CNO process is also mass dependent, and as a result, abundance ratios
+            like [C/N] can give insight into stellar evolution and be used to estimate ages (Salaris
+            et al. 2015). Thus, information about stellar evolution (i.e., age) is also correlated
+            with [Fe/H], [α/Fe], and other chemical abundances (Nissen et al. 2017; Casali et al.
+            2019). However, measured stellar abundances also depend on the material that a star was
+            formed from; chemical properties of the interstellar medium vary across time and
+            location within the Galaxy (Spina et al. 2016; Mena et al. 2019; Ness et al. 2019). For
+            example, Nissen et al. (2017) find for Kepler LEGACY stars in the Galactic disk that
+            [Mg/Fe] is correlated with age because the deposition of iron into the ISM from SNIa is
+            delayed relative to the production of Mg from SNII. Thus, ages that are inferred from
+            certain chemical abundances are entangled with Galactic chemical evolution. For
+            understanding the properties of stars and obtaining age estimates that are as precise as
+            possible, it may make sense to use as much information as is available. However, to
+            understand the assembly history of the Galaxy, it is ideal to have ages that are derived
+            from information intrinsic to a star—Galactic information should be removed. The primary
+            contribution of this paper is to introduce a framework for making probabilistic
+            predictions of the ages of stars. Here we use the Galactic information in the form of
+            [Mg/Fe] and [Fe/H] as well as stellar information in the form of [Fe/H], log g and Teff.
+            We then quantify how much age information comes from Galactic vs stellar models. We
+            introduce the methods used to do so—probabilistic random forests and SHapley Additive
+            exPlanations—and demonstrate the framework’s potential by applying it to a simple but
+            realistic simulation of Milky Way stars. We show that the model predictions are driven
+            primarily by stellar evolution information, and as a result, we are able to make robust
+            and interpretable predictions that reproduce expected trends in the data. In Section 6
+            we repeat our analysis using a sample of APOGEE-mocked red clump stars. This is a harder
+            test case because the stars in the sample have very similar log g values, as red clump
+            stars lie in a small cluster on the Hertzsprung-Russell diagram. Since log g is be
+            almost the same for all stars in that sample, we expect much less information to be
+            present in the stellar models than for the Milky Way sample. Thus, the models may need
+            to obtain age information by proxying through chemical correlations, which are not
+            intrinsic to the star itself. We show that this is indeed the case, and discuss some
+            implications of this result. We also make an attempt to explicitly decorrelate the
+            chemical information from the age information, and show how that process affects our
+            results. We note, however, that observers typically use [C/N] ratios rather than log g
+            and Teff to determine ages (e.g., Salaris et al. 2015; Martig et al. 2016; Ho et al.
+            2017; Casali et al. 2019). In a follow-up paper, we will extend our framework to
+            directly use stellar spectra rather than stellar parameters and abundances estimated
+            from the spectra. The layout of this paper is as follows. In Section 2 we describe our
+            data and the underlying Galactic and stellar models. In Section 3 we explain the
+            probabilistic random forest regression model which we use to make probabilistic age
+            predictions. In Section 4 we explain SHAP values, which allow us to quantify the
+            relative importance of certain features in our predictive models, and then use them to
+            determine the relative importance of features in our predictive model. In Section 5 we
+            discuss how well the models are able to reproduce simulated age-abundance trend in the
+            Galaxy, as a function of (1) choice of age estimator, (2) metallicity, and (3) whether
+            there are chemical correlations. In Section 6 we apply our framework to a harder test
+            case of red clump stars where the model proxies age information using chemical
+            correlations, and compare the results to those obtained from the Milky Way sample. A
+            summary of our findings is presented in Section 7.
+          </p>
+        </section>
+        <section id="section-4" class="section-4">
+          <h2 class="section-title">RANDOM FORESTS</h2>
+          <p class="section-text">
+            Measuring the chronochemodynamics of stars allows us to reconstruct a timeline of events
+            in the Galaxy. Of particular importance are stellar ages; good measurements of stellar
+            ages are necessary to understand stellar evolution and the formation history of the
+            Milky Way, and to identify new stellar populations within the Galaxy (Mackereth et al.
+            2019; Lu et al. 2021b,a; Ness et al. 2019; Aguirre et al. 2018). However, stellar ages
+            are particularly difficult to measure, as they are not directly related to any
+            observable (see Soderblom 2010 for a review). Instead, we can only measure properties
+            that are correlated with ages. For example, ages can be Corresponding author: Jeff Shen
+            shenjeff@princeton.edu obtained using gyrochronology (e.g., Barnes 2003; Angus et al.
+            2019) uses the empirical relation between a star’s rotation period and its age, and
+            asteroseismology (e.g., Lebreton & Montalban 2008; Aguirre et al. 2018), which uses
+            measurements of oscillation frequencies to probe the properties of the interiors of
+            stars, which are related to age. With the advent of surveys like APOGEE (Majewski et al.
+            2017), measurements of many stellar surface properties are available, and they can be
+            used to infer ages. Surface properties like log g and Teff describe stellar type, so
+            they can be used in conjunction with theoretical stellar evolution models to get
+            information about the age of a star (Bressan et al. 2012; Degl’Innocenti 2016; Choi et
+            al. 2016). Stellar evolution also changes surface abundances through physical processes
+            like dredge-up, whereby CNO products (nitrogen-rich and carbon-poor) are mixed into the
+            atmosphere of a star through convecarXiv:2305.15634v1 [astro-ph.GA] 25 May 2023 2 Shen
+            et al. tion. The CNO process is also mass dependent, and as a result, abundance ratios
+            like [C/N] can give insight into stellar evolution and be used to estimate ages (Salaris
+            et al. 2015). Thus, information about stellar evolution (i.e., age) is also correlated
+            with [Fe/H], [α/Fe], and other chemical abundances (Nissen et al. 2017; Casali et al.
+            2019). However, measured stellar abundances also depend on the material that a star was
+            formed from; chemical properties of the interstellar medium vary across time and
+            location within the Galaxy (Spina et al. 2016; Mena et al. 2019; Ness et al. 2019). For
+            example, Nissen et al. (2017) find for Kepler LEGACY stars in the Galactic disk that
+            [Mg/Fe] is correlated with age because the deposition of iron into the ISM from SNIa is
+            delayed relative to the production of Mg from SNII. Thus, ages that are inferred from
+            certain chemical abundances are entangled with Galactic chemical evolution. For
+            understanding the properties of stars and obtaining age estimates that are as precise as
+            possible, it may make sense to use as much information as is available. However, to
+            understand the assembly history of the Galaxy, it is ideal to have ages that are derived
+            from information intrinsic to a star—Galactic information should be removed. The primary
+            contribution of this paper is to introduce a framework for making probabilistic
+            predictions of the ages of stars. Here we use the Galactic information in the form of
+            [Mg/Fe] and [Fe/H] as well as stellar information in the form of [Fe/H], log g and Teff.
+            We then quantify how much age information comes from Galactic vs stellar models. We
+            introduce the methods used to do so—probabilistic random forests and SHapley Additive
+            exPlanations—and demonstrate the framework’s potential by applying it to a simple but
+            realistic simulation of Milky Way stars. We show that the model predictions are driven
+            primarily by stellar evolution information, and as a result, we are able to make robust
+            and interpretable predictions that reproduce expected trends in the data. In Section 6
+            we repeat our analysis using a sample of APOGEE-mocked red clump stars. This is a harder
+            test case because the stars in the sample have very similar log g values, as red clump
+            stars lie in a small cluster on the Hertzsprung-Russell diagram. Since log g is be
+            almost the same for all stars in that sample, we expect much less information to be
+            present in the stellar models than for the Milky Way sample. Thus, the models may need
+            to obtain age information by proxying through chemical correlations, which are not
+            intrinsic to the star itself. We show that this is indeed the case, and discuss some
+            implications of this result. We also make an attempt to explicitly decorrelate the
+            chemical information from the age information, and show how that process affects our
+            results. We note, however, that observers typically use [C/N] ratios rather than log g
+            and Teff to determine ages (e.g., Salaris et al. 2015; Martig et al. 2016; Ho et al.
+            2017; Casali et al. 2019). In a follow-up paper, we will extend our framework to
+            directly use stellar spectra rather than stellar parameters and abundances estimated
+            from the spectra. The layout of this paper is as follows. In Section 2 we describe our
+            data and the underlying Galactic and stellar models. In Section 3 we explain the
+            probabilistic random forest regression model which we use to make probabilistic age
+            predictions. In Section 4 we explain SHAP values, which allow us to quantify the
+            relative importance of certain features in our predictive models, and then use them to
+            determine the relative importance of features in our predictive model. In Section 5 we
+            discuss how well the models are able to reproduce simulated age-abundance trend in the
+            Galaxy, as a function of (1) choice of age estimator, (2) metallicity, and (3) whether
+            there are chemical correlations. In Section 6 we apply our framework to a harder test
+            case of red clump stars where the model proxies age information using chemical
+            correlations, and compare the results to those obtained from the Milky Way sample. A
+            summary of our findings is presented in Section 7.
+          </p>
+        </section>
+        <section id="section-5" class="section-5">
+          <h2 class="section-title">INTERPRETING MODEL PREDICTIONS WITH SHAP VALUES</h2>
+          <p class="section-text">
+            Measuring the chronochemodynamics of stars allows us to reconstruct a timeline of events
+            in the Galaxy. Of particular importance are stellar ages; good measurements of stellar
+            ages are necessary to understand stellar evolution and the formation history of the
+            Milky Way, and to identify new stellar populations within the Galaxy (Mackereth et al.
+            2019; Lu et al. 2021b,a; Ness et al. 2019; Aguirre et al. 2018). However, stellar ages
+            are particularly difficult to measure, as they are not directly related to any
+            observable (see Soderblom 2010 for a review). Instead, we can only measure properties
+            that are correlated with ages. For example, ages can be Corresponding author: Jeff Shen
+            shenjeff@princeton.edu obtained using gyrochronology (e.g., Barnes 2003; Angus et al.
+            2019) uses the empirical relation between a star’s rotation period and its age, and
+            asteroseismology (e.g., Lebreton & Montalban 2008; Aguirre et al. 2018), which uses
+            measurements of oscillation frequencies to probe the properties of the interiors of
+            stars, which are related to age. With the advent of surveys like APOGEE (Majewski et al.
+            2017), measurements of many stellar surface properties are available, and they can be
+            used to infer ages. Surface properties like log g and Teff describe stellar type, so
+            they can be used in conjunction with theoretical stellar evolution models to get
+            information about the age of a star (Bressan et al. 2012; Degl’Innocenti 2016; Choi et
+            al. 2016). Stellar evolution also changes surface abundances through physical processes
+            like dredge-up, whereby CNO products (nitrogen-rich and carbon-poor) are mixed into the
+            atmosphere of a star through convecarXiv:2305.15634v1 [astro-ph.GA] 25 May 2023 2 Shen
+            et al. tion. The CNO process is also mass dependent, and as a result, abundance ratios
+            like [C/N] can give insight into stellar evolution and be used to estimate ages (Salaris
+            et al. 2015). Thus, information about stellar evolution (i.e., age) is also correlated
+            with [Fe/H], [α/Fe], and other chemical abundances (Nissen et al. 2017; Casali et al.
+            2019). However, measured stellar abundances also depend on the material that a star was
+            formed from; chemical properties of the interstellar medium vary across time and
+            location within the Galaxy (Spina et al. 2016; Mena et al. 2019; Ness et al. 2019). For
+            example, Nissen et al. (2017) find for Kepler LEGACY stars in the Galactic disk that
+            [Mg/Fe] is correlated with age because the deposition of iron into the ISM from SNIa is
+            delayed relative to the production of Mg from SNII. Thus, ages that are inferred from
+            certain chemical abundances are entangled with Galactic chemical evolution. For
+            understanding the properties of stars and obtaining age estimates that are as precise as
+            possible, it may make sense to use as much information as is available. However, to
+            understand the assembly history of the Galaxy, it is ideal to have ages that are derived
+            from information intrinsic to a star—Galactic information should be removed. The primary
+            contribution of this paper is to introduce a framework for making probabilistic
+            predictions of the ages of stars. Here we use the Galactic information in the form of
+            [Mg/Fe] and [Fe/H] as well as stellar information in the form of [Fe/H], log g and Teff.
+            We then quantify how much age information comes from Galactic vs stellar models. We
+            introduce the methods used to do so—probabilistic random forests and SHapley Additive
+            exPlanations—and demonstrate the framework’s potential by applying it to a simple but
+            realistic simulation of Milky Way stars. We show that the model predictions are driven
+            primarily by stellar evolution information, and as a result, we are able to make robust
+            and interpretable predictions that reproduce expected trends in the data. In Section 6
+            we repeat our analysis using a sample of APOGEE-mocked red clump stars. This is a harder
+            test case because the stars in the sample have very similar log g values, as red clump
+            stars lie in a small cluster on the Hertzsprung-Russell diagram. Since log g is be
+            almost the same for all stars in that sample, we expect much less information to be
+            present in the stellar models than for the Milky Way sample. Thus, the models may need
+            to obtain age information by proxying through chemical correlations, which are not
+            intrinsic to the star itself. We show that this is indeed the case, and discuss some
+            implications of this result. We also make an attempt to explicitly decorrelate the
+            chemical information from the age information, and show how that process affects our
+            results. We note, however, that observers typically use [C/N] ratios rather than log g
+            and Teff to determine ages (e.g., Salaris et al. 2015; Martig et al. 2016; Ho et al.
+            2017; Casali et al. 2019). In a follow-up paper, we will extend our framework to
+            directly use stellar spectra rather than stellar parameters and abundances estimated
+            from the spectra. The layout of this paper is as follows. In Section 2 we describe our
+            data and the underlying Galactic and stellar models. In Section 3 we explain the
+            probabilistic random forest regression model which we use to make probabilistic age
+            predictions. In Section 4 we explain SHAP values, which allow us to quantify the
+            relative importance of certain features in our predictive models, and then use them to
+            determine the relative importance of features in our predictive model. In Section 5 we
+            discuss how well the models are able to reproduce simulated age-abundance trend in the
+            Galaxy, as a function of (1) choice of age estimator, (2) metallicity, and (3) whether
+            there are chemical correlations. In Section 6 we apply our framework to a harder test
+            case of red clump stars where the model proxies age information using chemical
+            correlations, and compare the results to those obtained from the Milky Way sample. A
+            summary of our findings is presented in Section 7.
+          </p>
+        </section>
+        <section id="section-6" class="section-6">
+          <h2 class="section-title">AGE ABUNDANCE TRENDS</h2>
+          <p class="section-text">
+            We would like to examine whether the models are able to accurately reproduce
+            age-abundance trends in the data. In Figure 8, we show the age-abundance trends for the
+            Milky Way sample. On the x-axes, we show the age of the star, and on the y-axes, we show
+            the [Mg/Fe] value from the dataset. In each panel, we consider stars in three different
+            [Fe/H] bins, as indicated by the color of the lines. Within each bin, there are three
+            sets of lines of identical colors: one created with the true age, one created with the
+            predictions from the model trained on the fiducial dataset, one created with the
+            predictions from the model trained on the dataset with chemical correlations removed.
+            That is, each line is created from datapoints with the same [Mg/Fe] values, but differ
+            in their ages (x-positions). Recalling that the outputs of our PRFR model are samples
+            from a posterior, we can consider how taking different point estimates from the
+            posterior can influence the predicted age-abundance trends. On the left, we consider
+            random samples from the conditional age distributions (converted from the conditional
+            mass distributions). On the right, we consider the mode from the conditional age
+            distributions. We see that the observed trends are very similar between the different
+            metallicity bins, and also between the two panels. In addition, the lines corresponding
+            to the model predicted ages and the true ages agree well. This shows that in this test
+            case where we are able to directly estimate the ages without proxying through chemical
+            correlations, the predictions from the model—regardless of whether we take random
+            samples (i.e., sample the entire posterior) or a summary statistic that traces the bulk
+            of the distribution—we are able to accurately reproduce age-abundance trends. 6. RED
+            CLUMP SAMPLE We repeat our entire analysis using an APOGEEmocked red clump sample of
+            stars. We generate this dataset following the method described in Section 2, but using
+            EEPs ranging from 631 to 707, corresponding to the core helium burning phase of a star’s
+            lifetime. Figure 9 shows the red clump sample in parameter space. The overall
+            distributions of [Mg/Fe] and [Fe/H] in the red clump sample is identical to those in the
+            Milky Way sample, but the log g and Teff values span a much smaller range. In
+            particular, the log g range for the red clump sample, especially in the absence of
+            observational noise, is extremely small, with most stars having log g ≈ 2.5. This
+            particular sample is a test case where the information content coming from stellar
+            evolution should be much lower, precisely due to the highly constrained range in values
+            as explained above—in the limiting case, we would be using a constant as one of the
+            variables, which should be totally uninformative. As a consequence, the model tries to
+            learn to predict masses using the available chemical proxies, rather than only through
+            stellar evolution. We stress, however, that it is indeed possible to use stellar
+            evolution to predict masses for red clump stars; there is simply less stellar evolution
+            information available
+          </p>
+        </section>
+      </main>
+      <footer class="page-footer">
+        <p class="page-footer-text">
+          © Draft version May 26, 2023 Typeset using LATEX twocolumn style in AASTeX63
+        </p>
+      </footer>
+    </div>
+  </body>
 </html>
