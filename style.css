@@ -9,7 +9,7 @@
 body {
     color: var(--primary-text-color);
     background-color: var(--primary-bcg);
-    font-family: 'Calibri', sans-serif;
+    font-family: 'CMR10', serif;
     font-style: normal;
     word-spacing: 4px;
 }
