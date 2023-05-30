@@ -30,7 +30,7 @@ body {
 .remark-container {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 75px;
+    margin-bottom: 50px;
 }
 .remark {
     display: inline-block;
