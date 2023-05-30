@@ -1,37 +1,54 @@
 :root {
-    --primary-text-color: ##212121;
-    --title-text-color: #000000;
-    --primary-bcg: #FFFFFF;
-    --accent-color: #2196F3;
+    --primary-text-color: #3f3f3f;
+    --title-text-color: #2f2f2f;
+    --primary-bcg: darkgray;
+    --secondary-bcg: #ffffff;
+    --accent-color: #22369c;
 }
 
 body {
     color: var(--primary-text-color);
     background-color: var(--primary-bcg);
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Calibri', sans-serif;
     font-style: normal;
+    word-spacing: 4px;
 }
 
 .container {
-    width: 1280px;
-    padding: 0 15px;
+    width: 842px;
+    padding: 0 50px;
     margin: 0 auto;
+
+    background-color: var(--secondary-bcg);
+}
+.text-accent {
+    font-weight: 700;
 }
 .page-header {
     padding-top: 50px;
 }
+.remark {
+    margin: 0 0 75px 0;
+    
+    font-weight: 400;
+    font-size: 14px;
+}
+.remark-right {
+    text-align: right;
+}
 .page-title {
-    margin: 0 0 100px 0;
+    margin: 0 0 10px 0;
 
     text-align: center;
     font-weight: 700;
-    font-size: 24px;
+    font-size: 16px;
     color: var(--title-text-color);
 }
 .page-nav-list {
-    margin: 0 0 50px 0;
+    margin: 0 0 10px 0;
 
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     list-style: none;
 }
@@ -52,7 +69,7 @@ body {
     margin: 0 0 50px 0;
 
     text-align: center;
-    font-weight: 300;
+    font-weight: 400;
     font-size: 13px;
     font-style: italic;
 }
@@ -69,18 +86,15 @@ body {
     font-weight: 300;
     font-size: 13px;
 }
-.section-img-title-accent {
-    font-weight: 700;
-}
 .section-title {
-    margin: 0 0 50px 0;
+    margin: 0 0 25px 0;
         
     text-align: center;
     font-weight: 500;
     font-size: 16px;
 }
 .section-text {
-    margin: 0 0 150px 0;
+    margin: 0 0 50px 0;
     
     font-weight: 400;
     font-size: 14px;
