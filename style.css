@@ -11,6 +11,7 @@ body {
     background-color: var(--primary-bcg);
     font-family: 'CMR10', serif;
     font-style: normal;
+    line-height: 1.25;
     word-spacing: 4px;
 }
 
@@ -40,8 +41,18 @@ body {
     font-size: 14px;
 }
 .remark-right {
-    display: inline-block;
+    display: flex;
+    list-style: none;
     margin: 0;
+}
+.remark-right-item:not(:last-child) {
+    margin-right: 30px;
+}
+.remark-right-link {
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 16px;
+    color: var(--accent-color);
 }
 .page-title {
     margin: 0 0 10px 0;
@@ -65,7 +76,7 @@ body {
 .page-nav-link {
     text-decoration: none;
     font-weight: 400;
-    font-size: 14px;
+    font-size: 16px;
     color: var(--accent-color);
 }
 .page-nav-link:hover,
