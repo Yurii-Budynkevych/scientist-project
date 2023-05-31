@@ -5,7 +5,9 @@
     --secondary-bcg: #ffffff;
     --accent-color: #22369c;
 }
-
+html {
+    scroll-behavior: smooth;
+}
 body {
     color: var(--primary-text-color);
     background-color: var(--primary-bcg);
@@ -53,6 +55,11 @@ body {
     font-weight: 400;
     font-size: 16px;
     color: var(--accent-color);
+    border-bottom: 2px solid transparent;
+}
+.remark-right-link:hover,
+.remark-right-link:focus {
+    border-bottom: 2px solid var(--accent-color);
 }
 .page-title {
     margin: 0 0 10px 0;
@@ -78,10 +85,11 @@ body {
     font-weight: 400;
     font-size: 16px;
     color: var(--accent-color);
+    border-bottom: 2px solid transparent;
 }
 .page-nav-link:hover,
 .page-nav-link:focus {
-    color: var(--title-text-color);
+    border-bottom: 2px solid var(--accent-color);
 }
 .page-text {
     margin: 0 0 50px 0;
