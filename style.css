@@ -142,7 +142,7 @@ body {
 
 @media screen and (max-width: 768px) {
     .container {
-        max-width: 680px;
+        max-width: 612px;
     }
     .remark-right {
         flex-direction: column;
@@ -155,7 +155,7 @@ body {
 
 @media screen and (max-width: 420px) {
     .container {
-        max-width: 380px;
+        max-width: 360px;
     }
     .remark-container {
         flex-direction: column;
