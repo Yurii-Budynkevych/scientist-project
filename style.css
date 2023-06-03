@@ -126,6 +126,7 @@ body {
 .section-text {
     margin: 0 0 50px 0;
     
+    text-align: justify;
     font-weight: 400;
     font-size: 14px;
 }
